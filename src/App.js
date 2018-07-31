@@ -7,7 +7,7 @@ import LoginForm from './components/LoginForm';
 
 class App extends Component {
 
-  //Issue with firebase 5.0.6
+  //Issue with firebase 5.0.6 even though I have 5.2.0
   //Fix: npm install --save firebase@5.0.4 or use below
   initializeFirebase() {
     const firebase = require("firebase");

@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 // This is a helper
 import { connect } from 'react-redux';
+import { Text } from 'react-native';
 import { emailChanged } from '../actions';
-import { Card, CardSection, Input, Button } from './common';
+import { Card, CardSection, Input, Button, TitleSection } from './common';
 
 class LoginForm extends Component {
 	// Anytime we want to use an event on an element
@@ -19,6 +20,9 @@ class LoginForm extends Component {
 	render() {
 		return(
 			<Card>
+				<TitleSection>
+				</TitleSection>
+
 				<CardSection>
 					<Input
 						label="Email"	
@@ -27,6 +31,7 @@ class LoginForm extends Component {
 						value={this.props.email}
 					/>
 				</CardSection>
+
 				<CardSection>
 					<Input
 						secureTextEntry
@@ -34,6 +39,7 @@ class LoginForm extends Component {
 						placeholder="password"
 					/>
 				</CardSection>
+
 				<CardSection>
 					<Button>
 						Login
@@ -45,7 +51,7 @@ class LoginForm extends Component {
 }
 
 // from react-redux library
-// is how we get a piece of state into our component will be call with the global application state
+// is how we get a piece of state into our component and will be called with the global application state
 const mapStateToProps = state => {
 	return {
 		email: state.auth.email
