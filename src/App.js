@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Provider } from 'react-redux';
-import { createStore } from 'redux';
+import { createStore, applyMiddleware } from 'redux';
+import ReduxThunk from 'redux-thunk';
 ////import firebase from 'firebase';
 import reducers from './reducers';
 import LoginForm from './components/LoginForm';
@@ -14,12 +15,12 @@ class App extends Component {
   
     // Initialize Firebase
     const config = {
-      apiKey: "AIzaSyCi6alTaei6Kotq5OVamVCDXdDZucM7gMU",
-      authDomain: "striking-splice-95612.firebaseapp.com",
-      databaseURL: "https://striking-splice-95612.firebaseio.com",
-      projectId: "striking-splice-95612",
-      storageBucket: "striking-splice-95612.appspot.com",
-      messagingSenderId: "84783460687"
+      apiKey: "AIzaSyAJL8-xXv5EIYF2A_UBRVWEDdMlVnKnKxQ",
+      authDomain: "manager-e55de.firebaseapp.com",
+      databaseURL: "https://manager-e55de.firebaseio.com",
+      projectId: "manager-e55de",
+      storageBucket: "manager-e55de.appspot.com",
+      messagingSenderId: "81414242422"
     };
     firebase.initializeApp(config);
   
@@ -35,9 +36,12 @@ class App extends Component {
 
 
   render() {
+
+    const store = createStore(reducers, {}, applyMiddleware(ReduxThunk));
+
     return (
       // give the provider a redux store
-      <Provider store={createStore(reducers)}>
+      <Provider store={store}>
         <LoginForm />
       </Provider>
     );

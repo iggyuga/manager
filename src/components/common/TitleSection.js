@@ -6,7 +6,7 @@ const TitleSection = ({ children }) => {
 	return (
 		<View style={containerStyle}>
 			<Text style={textStyle}>
-				Purple{children}
+				Purple Tits{children}
 			</Text>
 		</View>
 	);
@@ -14,7 +14,6 @@ const TitleSection = ({ children }) => {
 
 const styles = {
 	containerStyle: {
-		//borderBottomWidth: 1,
 		padding: 10,
 		backgroundColor: '#fff',
 		justifyContent: 'center',
@@ -29,7 +28,7 @@ const styles = {
 		alignSelf: 'center',
 		color: '#ff66eb',
 		fontSize: 24,
-
+		
 	},
 };
 
