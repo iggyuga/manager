@@ -1,19 +1,18 @@
 import React, { Component } from 'react';
 // This is a helper to create an action creator
 import { connect } from 'react-redux';
-////import { Text } from 'react-native';
+import { View, Text } from 'react-native';
 import { emailChanged, passwordChanged, loginUser } from '../actions';
-import { Card, CardSection, Input, Button, TitleSection } from './common';
+import { Card, CardSection, Input, Button, TitleSection, Spinner } from './common';
 
+// Anytime we want to use an event on an element
+// we need to declare the event handlers for them
 class LoginForm extends Component {
-	// Anytime we want to use an event on an element
-	// we need to declare the event handlers for them
 
-	onEmailChange(text) {
 		//we will want to call can action creator
-		// so that we can update our application level state
-		// with the value the user typed in
-
+	// so that we can update our application level state
+	// with the value the user typed in
+	onEmailChange(text) {
 		this.props.emailChanged(text);
 	}
 
@@ -25,6 +24,30 @@ class LoginForm extends Component {
 		const { email, password } = this.props;
 
 		this.props.loginUser({ email, password});
+	}
+
+	renderButton() {
+		if (this.props.loading) {
+			return <Spinner size="large" />
+		}
+
+		return (
+			<Button onPress={this.onButtonPress.bind(this)}>
+				Login
+			</Button>
+		)
+	}
+
+	renderError() {
+		if (this.props.error) {
+			return (
+				<View style={{ backgroundColor: 'white' }}>
+					<Text style={styles.errorTextStyle} >
+					{this.props.error}
+					</Text>
+				</View>
+			);
+		}
 	}
 
 	render() {
@@ -51,27 +74,33 @@ class LoginForm extends Component {
 						value={this.props.password}
 					/>
 				</CardSection>
-
+					{this.renderError()}
 				<CardSection>
-					<Button
-						onPress={this.onButtonPress.bind(this)}
-					>
-						Login
-					</Button>
+					{this.renderButton()}
 				</CardSection>
 			</Card>
 		);
 	}
 }
 
+const styles  = {
+	errorTextStyle: {
+		fontSize: 20,
+		alignSelf: 'center',
+		color: 'red'
+	}
+}
+
 // from react-redux library
 // is how we get a piece of state into our component and will be called with the global application state
 const mapStateToProps = state => {
-	const { email, password } = state.auth
+	const { email, password, error, loading } = state.auth
 	//TODO: restructure
 	return {
 		email: email,
-		password: password
+		password: password,
+		error: error,
+		loading: loading
 	};
 };
 

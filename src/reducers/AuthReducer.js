@@ -1,13 +1,22 @@
 import { EMAIL_CHANGED,
 		 PASSWORD_CHANGED,
 		 LOGIN_USER_SUCCESS,
+		 LOGIN_USER_FAIL,
+		 LOGIN_USER
 } from '../actions/types';
+
 // Here is what the user is actually typing
-const INITIAL_STATE = { email: '', password: '', user: null };
+const INITIAL_STATE = { 
+	email: '', 
+	password: '', 
+	user: null, 
+	error: '',
+	loading: false
+};
 
 // 1 piece of state for the entire application
 export default (state = INITIAL_STATE, action) => {
-	console.log(action);
+	////console.log(action);
 	switch (action.type) {
 		case EMAIL_CHANGED:
 			//update the state object
@@ -19,11 +28,15 @@ export default (state = INITIAL_STATE, action) => {
 			return { ...state, email: action.payload };
 		case PASSWORD_CHANGED:
 			return { ...state, password: action.payload };
+		case LOGIN_USER:
+			return { ...state, loading: true, error: '' }
 			// uses the firebase user model
 		case LOGIN_USER_SUCCESS:
-			return { ...state, user: action.user };
+			return { ...state, ...INITIAL_STATE,  user: action.payload,
+			};
+			// good spot to clear out password field when user fails
 		case LOGIN_USER_FAIL:
-			return { ...state, user: action.user}
+			return { ...state, error: 'Authentication Failed.', loading: false }
 		default:
 			return state;
 	}

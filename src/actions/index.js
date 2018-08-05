@@ -6,7 +6,8 @@ import {
 			PASSWORD_CHANGED, 
 			EMAIL_CHANGED, 
 			LOGIN_USER_SUCCESS,
-			LOGIN_USER_FAIL
+			LOGIN_USER_FAIL,
+			LOGIN_USER
 } from './types';
 
 
@@ -27,11 +28,14 @@ export const passwordChanged = (password) => {
 };
 
 //returning a function
-// Using redux thunk, we expand the range of values from an action creator 
+// Using redux thunk, we expand the range of (return) values from an action creator 
 // backdoor to redux
 export const loginUser = ({email, password}) => {
 	const firebase = require("firebase");
-	return (dispatch) => { firebase.auth().signInWithEmailAndPassword(email,password)
+	return (dispatch) => { 
+		dispatch({type: LOGIN_USER });
+		
+		firebase.auth().signInWithEmailAndPassword(email,password)
 		.then(user => loginUserSuccess(dispatch, user))
 		.catch(() => {
 			firebase.auth().createUserWithEmailAndPassword(email, password)
@@ -46,11 +50,10 @@ const loginUserSuccess = (dispatch, user) => {
 		type: LOGIN_USER_SUCCESS,
 		payload: user
 	});
-}
+};
 
-const loginUserFail = (dispatch) = {
+const loginUserFail = (dispatch) => {
 	dispatch({
 		type: LOGIN_USER_FAIL,
-		payload: user
 	});
 };
