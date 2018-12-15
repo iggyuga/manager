@@ -54,6 +54,7 @@ class LoginForm extends Component {
 		return(
 			<Card>
 				<TitleSection>
+					Purple tits
 				</TitleSection>
 
 				<CardSection>
